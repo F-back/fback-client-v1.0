@@ -6,6 +6,7 @@ import ErrorBoundaryLayout from '@/routes/layouts/ErrorBoundary';
 const DefaultLayout = React.lazy(() => import('@/routes/layouts/Default'));
 const Home = React.lazy(() => import('@/pages'));
 const Login = React.lazy(() => import('@/pages/login'));
+const Signup = React.lazy(() => import('@/pages/signup'));
 // const Post = React.lazy(() => import('@/pages/post'));
 // const PostDetail = React.lazy(() => import('@/pages/post/detail'));
 const NotFound = React.lazy(
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
           {
             path: '/login',
             element: <Login />,
+          },
+          {
+            path: '/signup',
+            element: <Signup />,
           },
           // {
           //   path: '/post',

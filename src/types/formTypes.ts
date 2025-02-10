@@ -1,6 +1,9 @@
-import { UserReq } from '@/api/type/user';
+import { SignupReq, UserReq } from '@/api/type/user';
 
-export type UserFormType = UserReq & {
+export type LoginFormType = UserReq & {
   remember?: boolean;
+};
+
+export type SignupFormType = SignupReq & {
   passwordConfirm?: string;
 };

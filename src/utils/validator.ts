@@ -21,3 +21,12 @@ export const passwordValidator = (_: RuleObject, value: string) => {
   }
   return Promise.resolve();
 };
+
+export const phoneNumberValidator = (_: RuleObject, value: string) => {
+  if (value && (!/^[0-9]+$/.test(value) || value.length !== 11)) {
+    return Promise.reject(
+      new Error("'-'를 제외한 11자리의 번호를 입력해주세요")
+    );
+  }
+  return Promise.resolve();
+};

@@ -5,12 +5,13 @@ const baseUrl = `${serverUrl}/api`;
 
 export const endPoints = {
   login: `${baseUrl}/auth/login`,
+  signup: `${baseUrl}/members`,
+  checkEmail: `${baseUrl}/auth/check-email?email={email}`,
 };
 
 export const instance = axios.create({
   headers: {
     Accept: 'application/json',
-    'Content-Type': 'application/x-www-form-urlencoded',
   },
 });
 

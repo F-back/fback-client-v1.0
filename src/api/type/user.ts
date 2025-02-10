@@ -4,13 +4,29 @@ export interface UserReq {
 }
 
 export interface LoginRes {
-  id: string;
+  id: number;
   email: string;
   name: string;
 }
 
-export interface ErrorRes {
-  message?: string;
+export interface SignupReq {
+  email: string;
+  phone: string;
+  password: string;
+  name: string;
 }
 
-export type LoginDto = LoginRes & ErrorRes;
+export interface SignupRes {
+  id: number;
+}
+
+export interface checkEmailReq {
+  email: string;
+}
+
+export interface checkEmailRes {
+  exists: boolean;
+}
+// export interface ErrorRes {
+//   message?: string;
+// }

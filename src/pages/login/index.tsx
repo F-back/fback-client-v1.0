@@ -16,7 +16,7 @@ import { ModalHandle } from '@/components/modal/BaseModalWrapper';
 import LogoutModal from '@/components/modal/LogoutModal';
 import { useGlobalContext } from '@/context/GlobalContext';
 import { useAuthStore } from '@/store/authStore';
-import { UserFormType } from '@/types/formTypes';
+import { LoginFormType } from '@/types/formTypes';
 import { emailValidator, passwordValidator } from '@/utils/validator';
 import styles from './index.module.scss';
 
@@ -31,7 +31,7 @@ const LoginPage = () => {
   const logoutModalRef = useRef<ModalHandle>(null);
   const { notification } = useGlobalContext();
 
-  const handleLogin: FormProps<UserFormType>['onFinish'] = (values) => {
+  const handleLogin: FormProps<LoginFormType>['onFinish'] = (values) => {
     const { email, password } = values;
     mutate({ email, password });
   };
@@ -87,7 +87,7 @@ const LoginPage = () => {
           onFinish={handleLogin}
           autoComplete="off"
         >
-          <Form.Item<UserFormType>
+          <Form.Item<LoginFormType>
             name="email"
             rules={[
               { required: true, message: '필수 입력 항목입니다' },
@@ -97,7 +97,7 @@ const LoginPage = () => {
             <Input placeholder="이메일을 입력하세요" ref={emailRef} />
           </Form.Item>
 
-          <Form.Item<UserFormType>
+          <Form.Item<LoginFormType>
             name="password"
             rules={[
               { required: true, message: '필수 입력 항목입니다' },
@@ -107,7 +107,7 @@ const LoginPage = () => {
             <Input.Password placeholder="비밀번호를 입력하세요" />
           </Form.Item>
 
-          <Form.Item<UserFormType>
+          <Form.Item<LoginFormType>
             name="remember"
             valuePropName="checked"
             label={null}
