@@ -1,8 +1,8 @@
-import { useGetTestApi } from '@/api/service/testApi';
+// import { useGetTestApi } from '@/api/service/user';
 
 function Post() {
-  const { data } = useGetTestApi();
-  console.log(data);
+  // const { data } = useGetTestApi();
+  // console.log(data);
 
   return (
     <div>

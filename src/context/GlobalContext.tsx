@@ -1,16 +1,45 @@
 import React, { createContext } from 'react';
+import { notification as AntdNotification } from 'antd';
+import { IconType, NotificationInstance } from 'antd/es/notification/interface';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+export interface NotificationType {
+  type?: IconType;
+  message: string;
+  description?: string;
+  key?: React.Key;
+}
 interface GlobalContextContainerProps {}
 
-interface GlobalConfig {}
+interface GlobalConfig {
+  notification: (props: NotificationType) => void;
+  notificationApi: NotificationInstance;
+}
 
 export const GlobalContext = createContext<GlobalConfig | undefined>(undefined);
 
 const GlobalContextContainer = ({
   children,
 }: React.PropsWithChildren<GlobalContextContainerProps>): React.ReactElement => {
-  const value = {};
+  const [notificationApi, contextHolder] = AntdNotification.useNotification();
+
+  const notification = ({
+    type = 'success',
+    message,
+    description,
+    key,
+  }: NotificationType) => {
+    notificationApi[type]({
+      message,
+      description,
+      key,
+    });
+  };
+
+  const value = {
+    notification,
+    notificationApi,
+  };
 
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -30,6 +59,7 @@ const GlobalContextContainer = ({
 
   return (
     <GlobalContext.Provider value={value}>
+      {contextHolder}
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </GlobalContext.Provider>
   );

@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-const baseUrl = import.meta.env.VITE_SERVER_URL;
+const serverUrl = import.meta.env.VITE_SERVER_URL;
+const baseUrl = `${serverUrl}/api`;
 
 export const endPoints = {
-  test: `${baseUrl}/posts`,
+  login: `${baseUrl}/auth/login`,
 };
 
 export const instance = axios.create({

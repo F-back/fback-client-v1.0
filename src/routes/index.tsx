@@ -5,9 +5,9 @@ import ErrorBoundaryLayout from '@/routes/layouts/ErrorBoundary';
 
 const DefaultLayout = React.lazy(() => import('@/routes/layouts/Default'));
 const Home = React.lazy(() => import('@/pages'));
-const Image = React.lazy(() => import('@/pages/image'));
-const Post = React.lazy(() => import('@/pages/post'));
-const PostDetail = React.lazy(() => import('@/pages/post/detail'));
+const Login = React.lazy(() => import('@/pages/login'));
+// const Post = React.lazy(() => import('@/pages/post'));
+// const PostDetail = React.lazy(() => import('@/pages/post/detail'));
 const NotFound = React.lazy(
   () => import('@/components/fallback/NotFoundFallback')
 );
@@ -24,17 +24,17 @@ const router = createBrowserRouter([
             element: <Home />,
           },
           {
-            path: '/image',
-            element: <Image />,
+            path: '/login',
+            element: <Login />,
           },
-          {
-            path: '/post',
-            element: <Post />,
-          },
-          {
-            path: '/post/:id',
-            element: <PostDetail />,
-          },
+          // {
+          //   path: '/post',
+          //   element: <Post />,
+          // },
+          // {
+          //   path: '/post/:id',
+          //   element: <PostDetail />,
+          // },
           {
             path: '*',
             element: <NotFound />,
