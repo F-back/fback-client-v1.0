@@ -1,16 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Button,
-  Flex,
-  Form,
-  FormProps,
-  Input,
-  InputNumber,
-  Typography,
-} from 'antd';
+import { Button, Flex, Form, FormProps, Input, Typography } from 'antd';
 import { RuleObject } from 'antd/es/form';
-import { useSignup } from '@/api/service/user';
+import { useCheckEmail, useSignup } from '@/api/service/user';
 import { ModalHandle } from '@/components/modal/BaseModalWrapper';
 import LogoutModal from '@/components/modal/LogoutModal';
 import { useGlobalContext } from '@/context/GlobalContext';
@@ -27,8 +19,14 @@ const SignupPage = () => {
   const { Link } = Typography;
   const navigate = useNavigate();
   const { mutate, isSuccess } = useSignup();
+  const {
+    mutate: checkEmailMutate,
+    isSuccess: checkEmailIsSuccess,
+    data: checkEmailData,
+  } = useCheckEmail();
   const { user } = useAuthStore();
   const [form] = Form.useForm();
+
   const logoutModalRef = useRef<ModalHandle>(null);
   const { notification } = useGlobalContext();
 
@@ -37,12 +35,30 @@ const SignupPage = () => {
     mutate({ email, phone, password, name });
   };
 
+  const handleEmailCheck = () => {
+    const email = form?.getFieldValue('email');
+    if (email) {
+      checkEmailMutate({ email });
+    }
+  };
+
   useEffect(() => {
     if (isSuccess) {
       notification({ message: '회원가입 성공' });
       navigate('/login');
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    if (checkEmailIsSuccess) {
+      const { exists } = checkEmailData;
+      if (exists) {
+        notification({ message: '이미 사용중인 이메일 입니다' });
+      } else {
+        notification({ message: '사용 가능한 이메일 입니다' });
+      }
+    }
+  }, [checkEmailIsSuccess]);
 
   useEffect(() => {
     if (user?.id) {
@@ -56,6 +72,9 @@ const SignupPage = () => {
         <p className={styles.logo}>Feedback Man</p>
         <Form
           form={form}
+          onValuesChange={(changedValues, allValues) => {
+            // console.log(form.getFieldError('email'));
+          }}
           className={styles.form}
           size="large"
           name="basic"
@@ -77,7 +96,16 @@ const SignupPage = () => {
               { validator: emailValidator },
             ]}
           >
-            <Input placeholder="이메일을 입력하세요" />
+            <Flex gap={8}>
+              <Input placeholder="이메일을 입력하세요" />
+              <Button
+                className={styles.email_check_button}
+                type="primary"
+                onClick={handleEmailCheck}
+              >
+                중복 확인
+              </Button>
+            </Flex>
           </Form.Item>
 
           <Form.Item<SignupFormType>
