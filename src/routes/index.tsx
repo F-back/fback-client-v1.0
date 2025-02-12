@@ -12,6 +12,7 @@ const Signup = React.lazy(() => import('@/pages/signup'));
 const NotFound = React.lazy(
   () => import('@/components/fallback/NotFoundFallback')
 );
+const ProjectPage = React.lazy(() => import('@/pages/project/ProjectPage'));
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
           {
             path: '*',
             element: <NotFound />,
+          },
+          {
+            path: 'project',
+            element: <ProjectPage />,
           },
         ],
       },
