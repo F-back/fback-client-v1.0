@@ -7,6 +7,7 @@ export const endPoints = {
   login: `${baseUrl}/auth/login`,
   signup: `${baseUrl}/members`,
   checkEmail: `${baseUrl}/auth/check-email?email={email}`,
+  projects: `${baseUrl}/projects`,
 };
 
 export const instance = axios.create({

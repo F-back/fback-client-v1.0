@@ -1,38 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Col, Row, Typography } from 'antd';
+import React from 'react';
+import { Card, Col, Row, Typography, Spin, Alert } from 'antd';
 import { Layout } from 'antd';
-
-interface Project {
-  id: number;
-  name: string;
-  description: string;
-  startDate: string;
-  endDate: string;
-  managerId: number;
-}
+import { useProjects } from '@/api/service/project';
 
 const ProjectPage: React.FC = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const { data: projects, isLoading, error } = useProjects();
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response = await fetch('/api/projects');
-        const data = await response.json();
-        setProjects(data);
-      } catch (error) {
-        console.error('프로젝트 데이터를 불러오는데 실패했습니다:', error);
-      }
-    };
+  if (isLoading) {
+    return (
+      <Layout.Content style={{ padding: '24px 50px' }}>
+        <Spin size="large" />
+      </Layout.Content>
+    );
+  }
 
-    fetchProjects();
-  }, []);
+  if (error) {
+    return (
+      <Layout.Content style={{ padding: '24px 50px' }}>
+        <Alert
+          message="에러 발생"
+          description="프로젝트 데이터를 불러오는데 실패했습니다."
+          type="error"
+        />
+      </Layout.Content>
+    );
+  }
 
   return (
     <Layout.Content style={{ padding: '24px 50px' }}>
       <Typography.Title level={2}>프로젝트 목록</Typography.Title>
       <Row gutter={[16, 16]}>
-        {projects.map((project) => (
+        {projects?.map((project) => (
           <Col xs={24} sm={12} md={8} key={project.id}>
             <Card title={project.name} style={{ height: '100%' }}>
               <Typography.Paragraph type="secondary">
