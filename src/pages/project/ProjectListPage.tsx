@@ -1,9 +1,10 @@
 import React from 'react';
-import { Card, Col, Row, Typography, Spin, Alert } from 'antd';
+import { Link } from 'react-router-dom';
+import { Alert, Card, Col, Row, Spin, Typography } from 'antd';
 import { Layout } from 'antd';
 import { useProjects } from '@/api/service/project';
 
-const ProjectPage: React.FC = () => {
+const ProjectListPage: React.FC = () => {
   const { data: projects, isLoading, error } = useProjects();
 
   if (isLoading) {
@@ -32,7 +33,10 @@ const ProjectPage: React.FC = () => {
       <Row gutter={[16, 16]}>
         {projects?.map((project) => (
           <Col xs={24} sm={12} md={8} key={project.id}>
-            <Card title={project.name} style={{ height: '100%' }}>
+            <Card
+              title={<Link to={`/projects/${project.id}`}>{project.name}</Link>}
+              style={{ height: '100%' }}
+            >
               <Typography.Paragraph type="secondary">
                 {project.description}
               </Typography.Paragraph>
@@ -51,4 +55,4 @@ const ProjectPage: React.FC = () => {
   );
 };
 
-export default ProjectPage;
+export default ProjectListPage;

@@ -1,8 +1,9 @@
 import React, { Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import SuspenseFallback from '@/components/fallback/SuspenseFallback';
+import ProjectDetailPage from '@/pages/project/ProjectDetailPage';
+import ProjectListPage from '@/pages/project/ProjectListPage';
 import ErrorBoundaryLayout from '@/routes/layouts/ErrorBoundary';
-
 const DefaultLayout = React.lazy(() => import('@/routes/layouts/Default'));
 const Home = React.lazy(() => import('@/pages'));
 const Login = React.lazy(() => import('@/pages/login'));
@@ -12,7 +13,6 @@ const Signup = React.lazy(() => import('@/pages/signup'));
 const NotFound = React.lazy(
   () => import('@/components/fallback/NotFoundFallback')
 );
-const ProjectPage = React.lazy(() => import('@/pages/project/ProjectPage'));
 
 const router = createBrowserRouter([
   {
@@ -46,8 +46,12 @@ const router = createBrowserRouter([
             element: <NotFound />,
           },
           {
-            path: 'project',
-            element: <ProjectPage />,
+            path: 'projects',
+            element: <ProjectListPage />,
+          },
+          {
+            path: 'projects/:id',
+            element: <ProjectDetailPage />,
           },
         ],
       },
